@@ -9,6 +9,10 @@
 
 ---
 
+#### C++ version of MuteActiveWindow is now available at [tfourj/MuteActiveWindowC](https://github.com/tfourj/MuteActiveWindowC)
+
+---
+
 This script was inspired by [kristoffer-tvera/mute-current-application](https://github.com/kristoffer-tvera/mute-current-application) but was rewritten for svcl and later custom open source solution MAW-MUTER because the previous version didn't work for me with the majority of UWP and some other apps, but I have published a fix that also fixes compatibility with UWP apps for kristoffer's script so feel free to use any of scripts.
 
 

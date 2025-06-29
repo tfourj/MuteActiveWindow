@@ -5,11 +5,11 @@
 
 # MuteActiveWindow
 
-**MuteActiveWindow** is an AutoHotkey script that allows you to mute the currently active window using a custom hotkey. **`F1` by default!**
+#### C++ version of MuteActiveWindow is now available at [tfourj/MuteActiveWindowC](https://github.com/tfourj/MuteActiveWindowC)
 
 ---
 
-#### C++ version of MuteActiveWindow is now available at [tfourj/MuteActiveWindowC](https://github.com/tfourj/MuteActiveWindowC)
+**MuteActiveWindow** is an AutoHotkey script that allows you to mute the currently active window using a custom hotkey. **`F1` by default!**
 
 ---
 

@@ -1,3 +1,4 @@
+- 9.1.1: Added config to toggle aditional keybinds, changed CTRL+ALT+O/P keybinds to SHIFT+CTRL
 - 9.1.0: Update for maw-muter(fix pid muting errors), add force update GUI
 - 9.0.0: MAW-MUTER.ahk is now default muting method
 - Settings.ini was added to handle multiple options

@@ -18,19 +18,22 @@ This script was inspired by [kristoffer-tvera/mute-current-application](https://
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Customize Hotkey](#customize-hotkey)
-- [Adding Exclusions](#adding-exclusions)
-- [Running the Script at Startup](#running-the-script-at-startup)
-  - [Automatic Startup](#automatic-startup-recommended)
-  - [Manual Startup](#manual-startup)
-- [Updating](#updating-your-script)
-  - [Enable auto-updates](#enable-auto-updates)
-  - [Manually check for updates](#manually-check-for-updates)
-  - [Enable beta updates](#enable-beta-updates)
-- [Aditional Keybinds](#aditional-keybinds)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [MuteActiveWindow](#muteactivewindow)
+      - [C++ version of MuteActiveWindow is now available at tfourj/MuteActiveWindowC](#c-version-of-muteactivewindow-is-now-available-at-tfourjmuteactivewindowc)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Customize Hotkey](#customize-hotkey)
+  - [Adding Exclusions](#adding-exclusions)
+  - [Running the Script at Startup](#running-the-script-at-startup)
+    - [Automatic Startup (Recommended)](#automatic-startup-recommended)
+    - [Manual Startup](#manual-startup)
+  - [Updating Your Script](#updating-your-script)
+    - [Enable auto-updates](#enable-auto-updates)
+    - [Manually check for updates](#manually-check-for-updates)
+    - [Enable beta updates](#enable-beta-updates)
+  - [Aditional Keybinds](#aditional-keybinds)
+  - [License](#license)
+  - [Acknowledgments](#acknowledgments)
 
 ## Installation
 
@@ -98,9 +101,10 @@ If you wish to disable this behaviour then:
 3. Reload the script and if beta update is available prompt to update will be displayed.
 
 ## Aditional Keybinds
+These have to be enabled in `Config.ini` with `EnableAditionalKeybinds=1` in order to work
 
-1. `CTRL + ALT + P` Opens prompt to add current program to exclusions list.
-2. `CTRL + ALT + O` Re-opens script with admin privileges.
+1. `CTRL + SHIFT + P` Opens prompt to add current program to exclusions list.
+2. `CTRL + SHIFT + O` Re-opens script with admin privileges.
 
 ## License
 

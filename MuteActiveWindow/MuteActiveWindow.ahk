@@ -12,7 +12,7 @@ ConfigDir := ScriptDir . "\Config"
 ConfigFile := ConfigDir . "\Settings.ini"
 ExcludedAppsFile := ConfigDir . "\ExcludedApps.txt"
 
-global ScriptVersion := "9.1.0"
+global ScriptVersion := "9.1.1"
 
 ; Add custom menu items to the tray menu
 AddCustomMenus() ; Add custom menu options on script startup
@@ -27,6 +27,7 @@ defaultSettings["AutoUpdateCheck"] := "1"
 defaultSettings["EnableBetaUpdates"] := "0"
 defaultSettings["UsePIDForMuting"] := "0"
 defaultSettings["EnableDebugMode"] := "0"
+defaultSettings["EnableAditionalKeybinds"] := "0"
 
 ; Create the INI file with default values if it doesn't exist or is empty
 if (!FileExist(ConfigFile)) {
@@ -47,12 +48,13 @@ if (!FileExist(ConfigFile)) {
 }
 
 ; Read settings
-global BetaUpdateEnabled, AutoUpdateEnabled, MutingMethodSelected, PIDMute, EnableDebug
+global BetaUpdateEnabled, AutoUpdateEnabled, MutingMethodSelected, PIDMute, EnableDebug, EnableAditionalKeybind
 IniRead, BetaUpdateEnabled, %ConfigFile%, MuteActiveWindow, EnableBetaUpdates, % defaultSettings["EnableBetaUpdates"]
 IniRead, AutoUpdateEnabled, %ConfigFile%, MuteActiveWindow, AutoUpdateCheck, % defaultSettings["AutoUpdateCheck"]
 IniRead, MutingMethodSelected, %ConfigFile%, MuteActiveWindow, SelectMutingMethod, % defaultSettings["SelectMutingMethod"]
 IniRead, PIDMute, %ConfigFile%, MuteActiveWindow, UsePIDForMuting, % defaultSettings["UsePIDForMuting"]
 IniRead, EnableDebug, %ConfigFile%, MuteActiveWindow, EnableDebugMode, % defaultSettings["EnableDebugMode"]
+IniRead, EnableAditionalKeybind, %ConfigFile%, MuteActiveWindow, EnableAditionalKeybinds, % defaultSettings["EnableAditionalKeybinds"]
 
 if (AutoUpdateEnabled = "1") {
     ; Run auto-update check if enabled
@@ -385,27 +387,31 @@ CheckForUpdates(isFromMenu := false) {
     }
 }
 
-^!P::
-    WindowUWP := WinExist("A")
-    ControlGetFocus, FocusedControl, ahk_id %WindowUWP%
-    ControlGet, Hwnd, Hwnd,, %FocusedControl%, ahk_id %WindowUWP%
-    WinGet, uwpprocess, processname, ahk_id %Hwnd%
-    
-    ; Prompt the user with a message box with "Yes" and "No" buttons
-    MsgBox, 4, Add Exe to excluded apps., Add EXE to Config/ExcludedApps.txt?`n%uwpprocess%
-    
-    ; Check if the user clicked "Yes"
-    IfMsgBox Yes
-    {   
-        FileAppend, `n%uwpprocess%, %ConfigDir%\ExcludedApps.txt
+^+P::
+    if (EnableAditionalKeybind = "1") {
+        WindowUWP := WinExist("A")
+        ControlGetFocus, FocusedControl, ahk_id %WindowUWP%
+        ControlGet, Hwnd, Hwnd,, %FocusedControl%, ahk_id %WindowUWP%
+        WinGet, uwpprocess, processname, ahk_id %Hwnd%
         
-        MsgBox, Added %uwpprocess% to Config/ExcludedApps.txt
+        ; Prompt the user with a message box with "Yes" and "No" buttons
+        MsgBox, 4, Add Exe to excluded apps., Add EXE to Config/ExcludedApps.txt?`n%uwpprocess%
+        
+        ; Check if the user clicked "Yes"
+        IfMsgBox Yes
+        {   
+            FileAppend, `n%uwpprocess%, %ConfigDir%\ExcludedApps.txt
+            
+            MsgBox, Added %uwpprocess% to Config/ExcludedApps.txt
+        }
     }
     
 return
 
-^!o::  ; CTRL+ALT+O to RE-RUN MAW as Admin
-    Run *RunAs "%A_ScriptFullPath%", , UseErrorLevel
-    if ErrorLevel
-        MsgBox, Failed to run MAW as administrator.
-    return
+^+O::  ; CTRL+ALT+O to RE-RUN MAW as Admin
+    if (EnableAditionalKeybind = "1") {
+        Run *RunAs "%A_ScriptFullPath%", , UseErrorLevel
+        if ErrorLevel
+            MsgBox, Failed to run MAW as administrator.
+        return
+    }

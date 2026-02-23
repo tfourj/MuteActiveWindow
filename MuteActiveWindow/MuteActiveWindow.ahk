@@ -12,7 +12,7 @@ ConfigDir := ScriptDir . "\Config"
 ConfigFile := ConfigDir . "\Settings.ini"
 ExcludedAppsFile := ConfigDir . "\ExcludedApps.txt"
 
-global ScriptVersion := "9.1.1"
+global ScriptVersion := "9.1.2"
 
 ; Add custom menu items to the tray menu
 AddCustomMenus() ; Add custom menu options on script startup
@@ -387,31 +387,28 @@ CheckForUpdates(isFromMenu := false) {
     }
 }
 
+#If (EnableAditionalKeybind = "1")
 ^+P::
-    if (EnableAditionalKeybind = "1") {
-        WindowUWP := WinExist("A")
-        ControlGetFocus, FocusedControl, ahk_id %WindowUWP%
-        ControlGet, Hwnd, Hwnd,, %FocusedControl%, ahk_id %WindowUWP%
-        WinGet, uwpprocess, processname, ahk_id %Hwnd%
-        
-        ; Prompt the user with a message box with "Yes" and "No" buttons
-        MsgBox, 4, Add Exe to excluded apps., Add EXE to Config/ExcludedApps.txt?`n%uwpprocess%
-        
-        ; Check if the user clicked "Yes"
-        IfMsgBox Yes
-        {   
-            FileAppend, `n%uwpprocess%, %ConfigDir%\ExcludedApps.txt
-            
-            MsgBox, Added %uwpprocess% to Config/ExcludedApps.txt
-        }
-    }
+    WindowUWP := WinExist("A")
+    ControlGetFocus, FocusedControl, ahk_id %WindowUWP%
+    ControlGet, Hwnd, Hwnd,, %FocusedControl%, ahk_id %WindowUWP%
+    WinGet, uwpprocess, processname, ahk_id %Hwnd%
     
+    ; Prompt the user with a message box with "Yes" and "No" buttons
+    MsgBox, 4, Add Exe to excluded apps., Add EXE to Config/ExcludedApps.txt?`n%uwpprocess%
+    
+    ; Check if the user clicked "Yes"
+    IfMsgBox Yes
+    {   
+        FileAppend, `n%uwpprocess%, %ConfigDir%\ExcludedApps.txt
+        
+        MsgBox, Added %uwpprocess% to Config/ExcludedApps.txt
+    }
 return
 
-^+O::  ; CTRL+ALT+O to RE-RUN MAW as Admin
-    if (EnableAditionalKeybind = "1") {
-        Run *RunAs "%A_ScriptFullPath%", , UseErrorLevel
-        if ErrorLevel
-            MsgBox, Failed to run MAW as administrator.
-        return
-    }
+^+O::  ; CTRL+SHIFT+O to RE-RUN MAW as Admin
+    Run *RunAs "%A_ScriptFullPath%", , UseErrorLevel
+    if ErrorLevel
+        MsgBox, Failed to run MAW as administrator.
+return
+#If
